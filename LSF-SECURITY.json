@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "lsf.github-action.security-fork.v1",
+  "upstreamRepository": "actions/setup-dotnet",
+  "upstreamRevision": "a98b56852c35b8e3190ac28c8c2271da59106c68",
+  "upstreamTag": "v6.0.0",
+  "runtime": "node24",
+  "nodeBuild": "24.19.0",
+  "dependencyOverrides": {
+    "brace-expansion@5": "5.0.12",
+    "fast-xml-parser@5": "5.11.2",
+    "brace-expansion@1": "1.1.21",
+    "undici@6": "6.29.1"
+  },
+  "productionPackages": 66,
+  "osvFindingCount": 0,
+  "validation": {
+    "name": "setup-dotnet",
+    "node": "v24.19.0",
+    "calls": [
+      {
+        "stage": "lock",
+        "status": 0,
+        "signal": null
+      },
+      {
+        "stage": "install",
+        "status": 0,
+        "signal": null
+      },
+      {
+        "stage": "build",
+        "status": 0,
+        "signal": null
+      },
+      {
+        "stage": "test",
+        "status": 0,
+        "signal": null
+      }
+    ],
+    "status": 0
+  },
+  "upstreamTests": [
+    "Test Suites: 9 passed, 9 total",
+    "Tests:       158 passed, 158 total",
+    "Snapshots:   11 passed, 11 total",
+    "Time:        6.494 s"
+  ],
+  "bundles": {
+    "dist/cache-save/index.js": {
+      "bytes": 3428752,
+      "sha256": "db61b4138c5df077e1b9ef4fc0bccf0253d7757a9a2fa1df4d8c4e8c2426c98a"
+    },
+    "dist/cache-save/package.json": {
+      "bytes": 23,
+      "sha256": "3ca9d4afd21425087cf31893b8f9f63c81b0b8408db5e343ca76e5f8aa26ab9a"
+    },
+    "dist/setup/index.js": {
+      "bytes": 3851008,
+      "sha256": "4b9640c5102f42106b98ec31cb682832a1b019d3a4609bdb4a105e7731b9e8c4"
+    },
+    "dist/setup/package.json": {
+      "bytes": 23,
+      "sha256": "3ca9d4afd21425087cf31893b8f9f63c81b0b8408db5e343ca76e5f8aa26ab9a"
+    }
+  }
+}
