@@ -1,0 +1,47 @@
+name: LSF license candidate
+
+on:
+  push:
+    branches:
+      - lsf-license-candidate-20261104
+
+permissions:
+  contents: read
+
+jobs:
+  licenses:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: KirilsTurkins/lsf-checkout@842365d0a25bf5a868311e4cb89c908bdcab4bb8
+        with:
+          persist-credentials: false
+      - uses: KirilsTurkins/lsf-setup-node@fdae00b14e855eb751452bc70c64dde286270415
+        with:
+          node-version: 24.19.0
+          package-manager-cache: false
+      - uses: ruby/setup-ruby@003a5c4d8d6321bd302e38f6f0ec593f77f06600
+        with:
+          ruby-version: '3.4'
+      - name: Install locked graph for license inventory
+        run: npm ci --ignore-scripts
+      - name: Install the upstream pinned license tool
+        run: |
+          curl -Lfs -o "$RUNNER_TEMP/licensed.tar.gz" https://codeload.github.com/licensee/licensed/tar.gz/refs/tags/v5.1.0
+          echo '5df74a739d26b7a1802645ad51594769353d4497550c5c54341cab03eeff759b  '"$RUNNER_TEMP/licensed.tar.gz" | sha256sum -c -
+          tar -xzf "$RUNNER_TEMP/licensed.tar.gz" -C "$RUNNER_TEMP"
+          cd "$RUNNER_TEMP/licensed-5.1.0"
+          bundle install
+      - name: Refresh and validate license inventory
+        run: |
+          export BUNDLE_GEMFILE="$RUNNER_TEMP/licensed-5.1.0/Gemfile"
+          bundle exec "$RUNNER_TEMP/licensed-5.1.0/exe/licensed" cache
+          bundle exec "$RUNNER_TEMP/licensed-5.1.0/exe/licensed" status
+      - name: Retain the license inventory
+        if: always()
+        uses: KirilsTurkins/lsf-upload-artifact@5c42799caf30eda69cb2db5da0be2400c47cef16
+        with:
+          name: setup-dotnet-license-candidate-${{ github.sha }}
+          path: .licenses/
+          include-hidden-files: true
+          if-no-files-found: error
